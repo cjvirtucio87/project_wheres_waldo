@@ -7,10 +7,9 @@ TAGS.view = (function($) {
     data.people().then(function(response) {
       _people = response;
     });
+
     // Tags are here.
-    data.tags().then(function(response) {
-      _tags = response;
-    }).then(renderTags);
+    data.tags().then(renderTags);
 
     _cacheDOM();
 
@@ -27,14 +26,16 @@ TAGS.view = (function($) {
     _$container = $(".container");
   };
 
-  var renderTags = function() {
-    for(var t in _tags) {
+  var renderTags = function(tagData) {
 
+      console.log(tagData)
+    for(var t in tagData) {
+      console.log("tagdata")
       _$container.append("<div class='tag-box'></div>");
       $(".tag-box").last()
                    .css({
-                     left:  _tags[t].left - 50,
-                     top:   _tags[t].top - 35
+                     left:  tagData[t].left - 50,
+                     top:   tagData[t].top - 35
                   })
                    .addClass("permanent")
                    .append("<div class='x'>x</div>");
@@ -58,20 +59,28 @@ TAGS.view = (function($) {
 
     clickImg: function(event) {
       // Make a new Box and append a list of names
+      _$tagBox.addClass("hidden")
+
+      _$waldoImg.off("mousemove")
+      _$waldoImg.off("click");
+      //$("#active").addClass("hidden")
       $newBox = _makeNewBox();
       _makePersonList($newBox);
       _$selected = $("div.tag-box").not(".permanent").last();
       // Permanence upon clicking a name.
+
       _listeners.nameListener();
     },
 
     clickListName: function(event) {
         $("ul > li").slice(_people.length * -1).addClass("hidden");
-        $(this).removeClass("hidden");
+        $(event.target).removeClass("hidden");
         $newBox.addClass("permanent");
         $newBox.append("<div class='x'>x</div>");
+
+        _listeners.clickImg();
+        _listeners.movingTag();
         _listeners.xListener();
-        console.log(_$selected.css('top'));
 
         var tagBoxData = {
           person_id: $(event.target).data('person-id'),
@@ -82,7 +91,7 @@ TAGS.view = (function($) {
         };
         TAGS.controller.sendTagBoxData(tagBoxData);
 
-        _$selected.remove();
+        // _$selected.remove();
     },
 
     xHandler: function(event) {
@@ -109,6 +118,7 @@ TAGS.view = (function($) {
   };
 
   var _makeNewBox = function () {
+
     _$container.append("<div class='tag-box'></div>");
     return $(".tag-box").last()
                         .css({

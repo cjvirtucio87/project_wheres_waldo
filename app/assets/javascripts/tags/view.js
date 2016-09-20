@@ -89,7 +89,7 @@ TAGS.view = (function($) {
     },
 
     xListener: function() {
-      $(".x").on("click", _eventHandlers.xHandler)
+      $(".x").on("click", _eventHandlers.xHandler);
     }
   };
 

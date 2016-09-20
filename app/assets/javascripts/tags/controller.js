@@ -9,11 +9,11 @@ TAGS.controller = (function(model, view) {
 
   var sendTagBoxData = function (data) {
     model.createTag(data);
-    console.log("this is firing");
   };
 
   return {
     init: init,
-    sendTagBoxData: sendTagBoxData
+    sendTagBoxData: sendTagBoxData,
+    getTags: getTags
   };
 })(TAGS.model,TAGS.view);

@@ -8,7 +8,12 @@ TAGS.view = (function($) {
       _people = response;
       console.log(response);
     });
-    _tags = data.tags();
+    // Tags are here.
+    data.tags().then(function(response) {
+      _tags = response;
+      console.log('tags');
+      console.log(response);
+    });
 
     _cacheDOM();
 
@@ -62,8 +67,7 @@ TAGS.view = (function($) {
             .substring(0, _$selected.css('left').length - 2))
       };
 
-      TAGS.controller.sendTagBoxData(tagBoxData)
-
+      TAGS.controller.sendTagBoxData(tagBoxData);
     },
 
     xHandler: function(event) {
@@ -111,7 +115,8 @@ TAGS.view = (function($) {
     }
   };
 
+
   return {
-    init: init
-  }
+    init: init,
+  };
 })($);

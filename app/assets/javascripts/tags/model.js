@@ -28,12 +28,12 @@ TAGS.model = (function() {
     return $.ajax({
       url: "/people.json",
       success: function(response) {
-        console.log(response)
+        console.log(response);
         return response;
       },
       type: "GET"
     });
-  }
+  };
 
   return {
     getTags: getTags,

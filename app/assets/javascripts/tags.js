@@ -1,20 +1,5 @@
 tags = {
 
-  mouseHoverListener: function() {
-    $tagBox = $('#active')
-
-    $("#waldo-img").on("mousemove", function(event) {
-
-
-    $tagBox.removeClass("hidden")
-
-    $tagBox.offset({
-         left:  event.pageX - 50,
-         top:   event.pageY - 35
-      });
-    });
-  },
-
   addClickListener: function() {
     $("#waldo-img").on("click", function(event) {
       console.log("clicked!")
@@ -65,4 +50,3 @@ $(document).ready(function() {
 // $("#image").on("mouseleave", function(event) {
 //   $tagBox.addClass("hidden")
 // });
-

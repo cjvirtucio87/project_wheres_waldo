@@ -1,28 +1,32 @@
-TAGS = TAGS || {}
+TAGS = TAGS || {};
 
 TAGS.model = (function() {
 
   getTags = function() {
     return $.ajax({
       url: "/tags",
-      success: function(response) { return response },
+      success: function(response) { return response; },
       type: "GET"
-      })
+    });
   };
 
-  createTag = function() {
-    $.ajax({
+  createTag = function(data) {
+    return $.ajax({
       url: "/tags",
-      success:
       type: "POST",
-      data: getTagJSONData(),
+      data: JSON.stringify(data),
       dataType: "json",
-      contentType:"application/json"
-    })
+      contentType:"application/json",
+      success: function (response) {
+        console.log('POST CREATE success!');
+        return response;
+      }
+    });
   };
 
   return {
     getTags: getTags,
-  }
+    createTag: createTag
+  };
 
 })();

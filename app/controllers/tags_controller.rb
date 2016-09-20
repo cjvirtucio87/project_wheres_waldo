@@ -1,8 +1,16 @@
 class TagsController < ApplicationController
   def index
     @tags = Tag.all
+    data = {}
+
+    @tags.each do |tag|
+      data["person_name"] = tag.person.name
+      data["left"] = tag.left
+      data["top"] = tag.top
+    end
+
     respond_to do |format|
-      format.json { render json: @tags, status: :created }
+      format.json { render json: data, status: :created }
       format.html { render :index }
     end
   end

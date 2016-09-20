@@ -8,6 +8,7 @@ TAGS.controller = (function(model, view) {
   };
 
   var sendTagBoxData = function (data) {
+    console.log(data)
     model.createTag(data);
   };
 

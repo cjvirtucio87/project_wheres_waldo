@@ -6,26 +6,49 @@ TAGS.view = (function($) {
   var init = function (data) {
     data.people().then(function(response) {
       _people = response;
-      console.log(response);
     });
     // Tags are here.
     data.tags().then(function(response) {
       _tags = response;
-      console.log('tags');
-      console.log(response);
-    });
+    }).then(renderTags);
+      ;
 
     _cacheDOM();
 
     for(var l in _listeners) {
       _listeners[l]();
     }
+
+
   };
 
   var _cacheDOM = function() {
     _$tagBox = $('#active');
     _$waldoImg = $("#waldo-img");
     _$container = $(".container");
+  };
+
+  var renderTags = function() {
+
+
+    for(var t in _tags) {
+
+      _$container.append("<div class='tag-box'></div>");
+      $(".tag-box").last()
+                   .css({
+                     left:  _tags[t].left - 50,
+                     top:   _tags[t].top - 35
+                  })
+                   .addClass("permanent")
+                   .append("<div class='x'>x</div>");
+
+      // $("ul > li").slice(_people.length * -1).addClass("hidden");
+      // $(this).removeClass("hidden");
+      // $newBox.addClass("permanent");
+      // $newBox
+      _listeners.xListener();
+
+    }
   };
 
   var _eventHandlers = {
@@ -38,7 +61,6 @@ TAGS.view = (function($) {
     },
 
     clickImg: function(event) {
-      console.log("clicked!");
       _$selected = $("div").not(".permanent").last();
 
       // Make a new Box and append a list of names
@@ -52,27 +74,31 @@ TAGS.view = (function($) {
 
     },
 
-    clickListName: function(event) {
-      $("ul > li").slice(_people.length * -1).addClass("hidden");
-      $(this).removeClass("hidden");
-      $newBox.addClass("permanent");
-      $newBox.append("<div class='x'>x</div>");
-      _listeners.xListener();
+    clickListName:
+    function(selected) {
+      function(event) {
+        $("ul > li").slice(_people.length * -1).addClass("hidden");
+        $(this).removeClass("hidden");
+        $newBox.addClass("permanent");
+        $newBox.append("<div class='x'>x</div>");
+        _listeners.xListener();
 
-      var tagBoxData = {
-        person_id: $(event.target).data('person-id'),
-        top: parseInt(_$selected.css('top')
-            .substring(0, _$selected.css('top').length - 2)),
-        left: parseInt(_$selected.css('left')
-            .substring(0, _$selected.css('left').length - 2))
-      };
+        var tagBoxData = {
+          person_id: $(event.target).data('person-id'),
+          top: parseInt(_$selected.css('top')
+              .substring(0, _$selected.css('top').length - 2)),
+          left: parseInt(_$selected.css('left')
+              .substring(0, _$selected.css('left').length - 2))
+        };
 
-      TAGS.controller.sendTagBoxData(tagBoxData);
-    },
+        TAGS.controller.sendTagBoxData(tagBoxData);
+      },
+    }
 
     xHandler: function(event) {
       $(event.target).parent().remove();
     }
+
   };
 
   var _listeners = {

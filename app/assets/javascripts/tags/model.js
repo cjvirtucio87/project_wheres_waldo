@@ -24,9 +24,18 @@ TAGS.model = (function() {
     });
   };
 
+  getPeople = function(data) {
+    return $.ajax({
+      url: "/people",
+      success: function(response) { return response; },
+      type: "GET"
+    });
+  }
+
   return {
     getTags: getTags,
-    createTag: createTag
+    createTag: createTag,
+    getPeople: getPeople
   };
 
 })();

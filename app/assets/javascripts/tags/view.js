@@ -1,15 +1,18 @@
 TAGS = TAGS || {};
 
-TAGS.view = (function($, people, tags) {
+TAGS.view = (function($) {
+  var _people, _tags;
+
   var init = function (data) {
     _people = data.people();
     _tags = data.tags();
-  };
 
-  // data = {
-  //   people: model.getPeople,
-  //   taggs: model.getTags
-  // };
+    _cacheDOM();
+
+    for(var l in _listeners) {
+      _listeners[l]();
+    };
+  };
 
   var _cacheDOM = function() {
     _$tagBox = $('#active');
@@ -25,35 +28,30 @@ TAGS.view = (function($, people, tags) {
          top:   event.pageY - 35
       });
     },
+
     clickImg: function(event) {
       console.log("clicked!");
       $("div").not(".permanent").last().remove();
-      // Difference from _$tagBox?
-      _$container.append("<div class='tag-box'></div>");
 
       // Make a new Box and append a list of names
       $newBox = _makeNewBox();
-      $ul = $("<ul class='box-list'></ul>");
-      $newBox.append($ul);
-      // Need to get people data from the model.
-
+      _makePersonList($newBox)
 
       // Permanence upon clicking a name.
-      $("ul > li").on("click", _eventHandlers.clickListName);
-
-      // for(var person in tags.getPeople()) {
-      //   $ul.append(<li></li>)
-      // }
+      _listeners.nameListener();
     },
+
     clickListName: function() {
-      $("ul > li").slice(-3).addClass("hidden");
+      $("ul > li").slice(_people.length * -1).addClass("hidden");
       $(this).removeClass("hidden");
       $newBox.addClass("permanent");
       $newBox.append("<div class='x'>x</div>");
+      _listeners.xListener();
 
-      $(".x").on("click", function(event) {
-        $(this).parent().remove();
-      });
+    },
+
+    xHandler: function(event) {
+      $(event.target).parent().remove();
     }
   };
 
@@ -61,32 +59,42 @@ TAGS.view = (function($, people, tags) {
     movingTag: function() {
       _$waldoImg.on("mousemove", _eventHandlers.movingTag);
     },
+
     clickImg: function () {
       _$waldoImg.on("click", _eventHandlers.clickImg);
+    },
+
+    nameListener: function() {
+      $("ul > li").on("click", _eventHandlers.clickListName);
+    },
+
+    xListener: function() {
+    $(".x").on("click", _eventHandlers.xHandler)
     }
   };
 
   var _makeNewBox = function () {
+    _$container.append("<div class='tag-box'></div>");
     return $(".tag-box").last()
                         .css({
                            left:  event.pageX - 50,
                            top:   event.pageY - 35
                         });
+
   };
 
-  mouseHoverListener = function() {
-    $tagBox = $('#active')
+  var _makePersonList = function(newBox) {
+    $ul = $("<ul class='box-list'></ul>");
+    newBox.append($ul);
 
-    $("#waldo-img").on("mousemove", function(event) {
+    // Need to get people data from the model.
+    for(person in _people) {
+      $li = ("<li>" + -people[person].name + "</li>");
+      $ul.append($li);
+    }
+  };
 
-
-    $tagBox.removeClass("hidden")
-
-    $tagBox.offset({
-         left:  event.pageX - 50,
-         top:   event.pageY - 35
-      });
-    });
+  return {
+    init: init
   }
-
-})($, APP.controller.people, APP.controller.tags);
+})($);

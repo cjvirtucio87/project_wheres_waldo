@@ -1,4 +1,4 @@
-TAGS = TAGS || {};
+var TAGS = TAGS || {};
 
 TAGS.model = (function() {
 
@@ -26,8 +26,10 @@ TAGS.model = (function() {
 
   getPeople = function(data) {
     return $.ajax({
-      url: "/people",
-      success: function(response) { return response; },
+      url: "/people.json",
+      success: function(response) {
+        console.log(response)
+        return response; },
       type: "GET"
     });
   }

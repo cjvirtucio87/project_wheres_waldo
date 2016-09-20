@@ -1,4 +1,4 @@
-TAGS = TAGS || {};
+var TAGS = TAGS || {};
 
 TAGS.view = (function($) {
   var _people, _tags;
@@ -89,7 +89,7 @@ TAGS.view = (function($) {
 
     // Need to get people data from the model.
     for(person in _people) {
-      $li = ("<li>" + -people[person].name + "</li>");
+      $li = ("<li>" + _people[person].name + "</li>");
       $ul.append($li);
     }
   };

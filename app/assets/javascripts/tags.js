@@ -1,3 +1,11 @@
+
+
+$(document).ready(function() {
+  if($("#tags-index").length){
+    TAGS.controller.init();
+  }
+});
+
 // tags = {
 //
 //   addClickListener: function() {

@@ -9,16 +9,14 @@
 //
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
-//
+
+
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
-//= require_tree tags/controller
-//= require_tree tags/model
-//= require_tree tags/view
+//= require tags/model
+//= require tags/view
+//= require tags/controller
+//= require tags
+//= require cable
 
-var TAGS = TAGS || {};
 
-$(document).ready(function() {
-  TAGS.controller.init();
-});

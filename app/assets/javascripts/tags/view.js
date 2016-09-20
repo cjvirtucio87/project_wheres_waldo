@@ -55,7 +55,7 @@ TAGS.view = (function($) {
       _listeners.xListener();
 
       var tagBoxData = {
-        id: $(event.target).data('person-id'),
+        person_id: $(event.target).data('person-id'),
         top: parseInt(_$selected.css('top')
             .substring(0, _$selected.css('top').length - 2)),
         left: parseInt(_$selected.css('left')

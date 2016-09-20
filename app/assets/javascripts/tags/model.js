@@ -14,7 +14,7 @@ TAGS.model = (function() {
     return $.ajax({
       url: "/tags",
       type: "POST",
-      data: JSON.stringify(data),
+      data: JSON.stringify({tag: data}),
       dataType: "json",
       contentType:"application/json",
       success: function (response) {

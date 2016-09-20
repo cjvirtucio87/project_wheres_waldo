@@ -1,7 +1,7 @@
 var TAGS = TAGS || {};
 
 TAGS.view = (function($) {
-  var _people, _tags, _clickedPerson;
+  var _people, _tags, _clickedPerson, _$selected;
 
   var init = function (data) {
     data.people().then(function(response) {
@@ -11,7 +11,6 @@ TAGS.view = (function($) {
     data.tags().then(function(response) {
       _tags = response;
     }).then(renderTags);
-      ;
 
     _cacheDOM();
 
@@ -29,8 +28,6 @@ TAGS.view = (function($) {
   };
 
   var renderTags = function() {
-
-
     for(var t in _tags) {
 
       _$container.append("<div class='tag-box'></div>");
@@ -47,7 +44,6 @@ TAGS.view = (function($) {
       // $newBox.addClass("permanent");
       // $newBox
       _listeners.xListener();
-
     }
   };
 
@@ -61,27 +57,21 @@ TAGS.view = (function($) {
     },
 
     clickImg: function(event) {
-      _$selected = $("div").not(".permanent").last();
-
       // Make a new Box and append a list of names
       $newBox = _makeNewBox();
       _makePersonList($newBox);
-
-
+      _$selected = $("div.tag-box").not(".permanent").last();
       // Permanence upon clicking a name.
       _listeners.nameListener();
-      _$selected.remove();
-
     },
 
-    clickListName:
-    function(selected) {
-      function(event) {
+    clickListName: function(event) {
         $("ul > li").slice(_people.length * -1).addClass("hidden");
         $(this).removeClass("hidden");
         $newBox.addClass("permanent");
         $newBox.append("<div class='x'>x</div>");
         _listeners.xListener();
+        console.log(_$selected.css('top'));
 
         var tagBoxData = {
           person_id: $(event.target).data('person-id'),
@@ -90,15 +80,14 @@ TAGS.view = (function($) {
           left: parseInt(_$selected.css('left')
               .substring(0, _$selected.css('left').length - 2))
         };
-
         TAGS.controller.sendTagBoxData(tagBoxData);
-      },
-    }
+
+        _$selected.remove();
+    },
 
     xHandler: function(event) {
       $(event.target).parent().remove();
     }
-
   };
 
   var _listeners = {

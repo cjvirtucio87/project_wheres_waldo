@@ -1,7 +1,7 @@
 TAGS = TAGS || {};
 
-TAGS.controller = (function() {
+TAGS.controller = (function(model, view) {
   var init = function() {
-    TAGS.view.init({ tags: TAGS.model.getTags, people: TAGS.model.getPeople })
-  }
-})();
+    view.init({ tags: model.getTags, people: model.getPeople });
+  };
+})(TAGS.model,TAGS.view);

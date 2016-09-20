@@ -13,4 +13,12 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require_tree .
+//= require_tree tags/controller
+//= require_tree tags/model
+//= require_tree tags/view
+
+var TAGS = TAGS || {};
+
+$(document).ready(function() {
+  TAGS.controller.init();
+});

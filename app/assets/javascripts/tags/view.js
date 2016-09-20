@@ -1,12 +1,12 @@
 var TAGS = TAGS || {};
 
 TAGS.view = (function($) {
-  var _people, _tags;
+  var _people, _tags, _clickedPerson;
 
   var init = function (data) {
     data.people().then(function(response) {
-      console.log(response);
       _people = response;
+      console.log(response);
     });
     _tags = data.tags();
 
@@ -40,27 +40,30 @@ TAGS.view = (function($) {
       $newBox = _makeNewBox();
       _makePersonList($newBox);
 
-      var tagBoxData = {
-        id: _$selected.data('person-id'),
-        top: _$selected.css('top'),
-        left: _$selected.css('left')
-      };
-
-      console.log(tagBoxData);
 
       // Permanence upon clicking a name.
       _listeners.nameListener();
-
       _$selected.remove();
+
     },
 
-    clickListName: function(ev) {
+    clickListName: function(event) {
       $("ul > li").slice(_people.length * -1).addClass("hidden");
       $(this).removeClass("hidden");
       $newBox.addClass("permanent");
       $newBox.append("<div class='x'>x</div>");
       _listeners.xListener();
-      console.log(ev.target.parent);
+
+      var tagBoxData = {
+        id: $(event.target).data('person-id'),
+        top: parseInt(_$selected.css('top')
+            .substring(0, _$selected.css('top').length - 2)),
+        left: parseInt(_$selected.css('left')
+            .substring(0, _$selected.css('left').length - 2))
+      };
+
+      TAGS.controller.sendTagBoxData(tagBoxData)
+
     },
 
     xHandler: function(event) {
@@ -102,7 +105,8 @@ TAGS.view = (function($) {
 
     // Need to get people data from the model.
     for(var person in _people) {
-      $li = ("<li data-person-id=" + _people[person].id + ">" + _people[person].name + "</li>");
+      $li = $("<li>" + _people[person].name + "</li>")
+            .attr('data-person-id', _people[person].id);
       $ul.append($li);
     }
   };

@@ -27,18 +27,21 @@ TAGS.view = (function($) {
   var renderTags = function(tagData) {
     for(var t in tagData) {
       _$container.append("<div class='tag-box'></div>");
-      $(".tag-box").last()
-                   .css({
-                     left:  tagData[t].left - 50,
-                     top:   tagData[t].top - 35
+      var _$tagBox = $(".tag-box").last();
+      _$tagBox.css({
+                   left:  tagData[t].left - 50,
+                   top:   tagData[t].top - 35
                   })
-                   .addClass("permanent")
-                   .append("<div class='x'>x</div>");
+               .addClass("permanent")
+               .append("<div class='x'>x</div>");
+      _$lineItem = $("<li>").text(tagData[t].person_name);
+      _$unorderedList = $("<ul>").addClass('box-list');
+      _$unorderedList.append(_$lineItem);
+      _$tagBox.append(_$unorderedList);
 
       // $("ul > li").slice(_people.length * -1).addClass("hidden");
       // $(this).removeClass("hidden");
       // $newBox.addClass("permanent");
-      // $newBox
       _listeners.xListener();
     }
   };

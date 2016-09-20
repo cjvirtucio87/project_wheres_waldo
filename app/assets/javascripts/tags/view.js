@@ -30,7 +30,8 @@ TAGS.view = (function($) {
                    top:   tagData[t].top - 35
                   })
                .addClass("permanent")
-               .append("<div class='x'>x</div>");
+               .append("<div class='x'>x</div>")
+               .attr('data-id', tagData[t].id);
       _$lineItem = $("<li>").text(tagData[t].person_name);
       _$unorderedList = $("<ul>").addClass('box-list');
       _$unorderedList.append(_$lineItem);
@@ -89,7 +90,9 @@ TAGS.view = (function($) {
 
     xHandler: function(destroyCallback) {
       return function(event) {
+        var tagID = $(event.target).parent().data().id;
         $(event.target).parent().remove();
+        destroyCallback(tagID);
       };
     }
   };
@@ -113,7 +116,6 @@ TAGS.view = (function($) {
   };
 
   var _makeNewBox = function () {
-
     _$container.append("<div class='tag-box'></div>");
     return $(".tag-box").last()
                         .css({

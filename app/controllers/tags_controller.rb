@@ -2,7 +2,8 @@ class TagsController < ApplicationController
   def index
     @tags = Tag.all
     data = @tags.map do |tag|
-      {person_name: tag.person.name,
+      {id: tag.id,
+       person_name: tag.person.name,
        left: tag.left,
        top: tag.top}
     end

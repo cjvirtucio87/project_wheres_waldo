@@ -29,7 +29,8 @@ TAGS.model = (function() {
       url: "/people.json",
       success: function(response) {
         console.log(response)
-        return response; },
+        return response;
+      },
       type: "GET"
     });
   }

@@ -4,7 +4,10 @@ TAGS.view = (function($) {
   var _people, _tags;
 
   var init = function (data) {
-    _people = data.people();
+    data.people().then(function(response) {
+      console.log(response);
+      _people = response;
+    });
     _tags = data.tags();
 
     _cacheDOM();

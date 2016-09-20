@@ -5,3 +5,12 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Person.destroy_all
+puts "Reseeding people..."
+
+["Waldo", "Wenda", "Odlaw", "Wizard Whitebeard", "Woof"].each do |name|
+  Person.create!({ name: name })
+end
+
+puts "Reseed complete."

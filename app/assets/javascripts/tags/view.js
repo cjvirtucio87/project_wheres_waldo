@@ -16,8 +16,6 @@ TAGS.view = (function($) {
     for(var l in _listeners) {
       _listeners[l]();
     }
-
-
   };
 
   var _cacheDOM = function() {
@@ -27,10 +25,7 @@ TAGS.view = (function($) {
   };
 
   var renderTags = function(tagData) {
-
-      console.log(tagData)
     for(var t in tagData) {
-      console.log("tagdata")
       _$container.append("<div class='tag-box'></div>");
       $(".tag-box").last()
                    .css({
@@ -59,9 +54,8 @@ TAGS.view = (function($) {
 
     clickImg: function(event) {
       // Make a new Box and append a list of names
-      _$tagBox.addClass("hidden")
-
-      _$waldoImg.off("mousemove")
+      _$tagBox.addClass("hidden");
+      _$waldoImg.off("mousemove");
       _$waldoImg.off("click");
       //$("#active").addClass("hidden")
       $newBox = _makeNewBox();

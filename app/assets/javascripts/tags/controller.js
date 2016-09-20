@@ -2,7 +2,9 @@ var TAGS = TAGS || {};
 
 TAGS.controller = (function(model, view) {
   var init = function() {
-    view.init({ tags: model.getTags, people: model.getPeople });
+    view.init({ tags: model.getTags,
+                people: model.getPeople,
+                destroyTag: model.destroyTag });
   };
 
   var sendTagBoxData = function (data) {
@@ -11,7 +13,6 @@ TAGS.controller = (function(model, view) {
 
   return {
     init: init,
-    sendTagBoxData: sendTagBoxData,
-    getTags: getTags
+    sendTagBoxData: sendTagBoxData
   };
 })(TAGS.model,TAGS.view);

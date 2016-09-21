@@ -36,11 +36,11 @@ TAGS.model = (function() {
 
   var destroyTag = function(tagID) {
      return $.ajax({
-       url: ['/tag/',tagID].join(''),
+       url: ['/tags/',tagID, ".json"].join(''),
        type: 'POST',
-       dataType: 'json',
-       data: JSON.stringify({_method: 'delete'}),
-       contentType: 'application/json',
+//     dataType: 'json',
+       data: {_method: 'delete'},
+//     contentType: 'application/json',
        success: function (response) {
          console.log("Tag deleted");
        }
@@ -51,7 +51,8 @@ TAGS.model = (function() {
   return {
     getTags: getTags,
     createTag: createTag,
-    getPeople: getPeople
+    getPeople: getPeople,
+    destroyTag: destroyTag
   };
 
 })();

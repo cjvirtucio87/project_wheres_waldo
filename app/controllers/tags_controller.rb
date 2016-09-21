@@ -27,11 +27,13 @@ class TagsController < ApplicationController
 
   def destroy
     @tag = Tag.find(params[:id])
+
     if @tag.destroy
       respond_to do |format|
-        format.json { redirect_to tags_path }
+        format.json
       end
     end
+
   end
 
   private

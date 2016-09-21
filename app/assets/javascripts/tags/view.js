@@ -3,16 +3,21 @@ var TAGS = TAGS || {};
 TAGS.view = (function($) {
   var _people, _tags, _clickedPerson, _$selected, _destroyCallback;
   var init = function (data) {
+
+    console.log(data)
     data.people().then(function(response) {
       _people = response;
     });
+
     data.tags().then(renderTags);
+
     _cacheDOM();
     _listeners.movingTag();
     _listeners.clickImg();
     _listeners.nameListener();
-    _destroyCallback = data.destroyTag;
-    _listeners.xListener(_destroyCallback);
+    _listeners.xListener(data.destroyTag);
+    // _destroyCallback = data.destroyTag;
+
   };
 
   var _cacheDOM = function() {
@@ -74,7 +79,7 @@ TAGS.view = (function($) {
 
         _listeners.clickImg();
         _listeners.movingTag();
-        _listeners.xListener(_destroyCallback);
+        // _listeners.xListener(_destroyCallback);
 
         var tagBoxData = {
           person_id: $(event.target).data('person-id'),
@@ -91,8 +96,11 @@ TAGS.view = (function($) {
     xHandler: function(destroyCallback) {
       return function(event) {
         var tagID = $(event.target).parent().data().id;
+
         $(event.target).parent().remove();
+
         destroyCallback(tagID);
+
       };
     }
   };
@@ -122,7 +130,8 @@ TAGS.view = (function($) {
                            left:  event.pageX - 50,
                            top:   event.pageY - 35
                         });
-
+// re render
+// add data-id attribute
   };
 
   var _makePersonList = function(newBox) {
